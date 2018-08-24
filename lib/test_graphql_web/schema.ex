@@ -1,6 +1,7 @@
 defmodule TestGraphqlWeb.Schema do
   use Absinthe.Schema
   alias TestGraphql.News
+  alias TestGraphqlWeb.Resolvers.NewsResolver
 
   object :link do
     field(:id, non_null(:id))
@@ -10,6 +11,8 @@ defmodule TestGraphqlWeb.Schema do
 
   query do
     # this is the query entry point to our app
-    field(:all_links, non_null(list_of(non_null(:link))))
+    field(:all_links, non_null(list_of(non_null(:link)))) do
+      resolve(&NewsResolver.all_links/3)
+    end
   end
 end
